@@ -1,29 +1,3 @@
-
-package org.usfirst.frc.team2854.robot;
-
-<<<<<<< HEAD
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team2854.robot.commands.ArmCommand;
-import org.usfirst.frc.team2854.robot.commands.ClimbingCommand;
-=======
->>>>>>> e99f0f0604b0ea4d0eef54401873fad44ce1c8d6
-import org.usfirst.frc.team2854.robot.commands.Drive;
-import org.usfirst.frc.team2854.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2854.robot.commands.Intake;
-import org.usfirst.frc.team2854.robot.subsystems.ArmSubsystem;
-import org.usfirst.frc.team2854.robot.subsystems.ClimbingSubsystem;
-import org.usfirst.frc.team2854.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team2854.robot.subsystems.IntakeSystem;
-
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -33,16 +7,16 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 	private static OI oi;
-<<<<<<< HEAD
-	private static final DriveTrain driveTrain = new DriveTrain(RMap.MA, RMap.MAA, RMap.MB, RMap.MBB);
-	private static final IntakeSystem intakeSystem = new IntakeSystem(RMap.MC, RMap.MCC);
-	
-	private static final ArmSubsystem armSubsystem = new ArmSubsystem(RMap.a); // check parameters
-	private static final ClimbingSubsystem climbingSubsystem = new ClimbingSubsystem(RMap.b, RMap.c, RMap.d); // check parameters
-=======
 	private static final DriveTrain driveTrain = new DriveTrain(RMap.TALONSRX_0, RMap.TALONSRX_1, RMap.TALONSRX_3, RMap.TALONSRX_2);
 	private static final IntakeSystem intakeSystem = new IntakeSystem(RMap.TALON_0);
->>>>>>> e99f0f0604b0ea4d0eef54401873fad44ce1c8d6
+=======
+	private static CameraSystem cameraSystem;
+
+	private static  Breaching breachSystem;
+	private static  DriveTrain driveTrain;
+//	private static  IntakeSystem intakeSystem;
+	private static  ClimbSystem climbSystem;
+>>>>>>> justin2
 
 	private Command autonomousCommand;
 
@@ -52,17 +26,25 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		oi = new OI();
-<<<<<<< HEAD
-		// instantiate the command used for the autonomous period
-		autonomousCommand = new ExampleCommand();
-	}
-
 =======
+		RMap rmap = new RMap();
+//		breachSystem = new BreachSystem(rmap.TALON_5);
+//		breachSystem = new BreachSystem(rmap.TALON_1, rmap.ENCODER_01, rmap.COUNTER_9);
+
+//		cameraSystem = new CameraSystem();
+		driveTrain = new DriveTrain(rmap.TALON_1, rmap.TALON_2, rmap.TALON_3, rmap.TALON_4, rmap.ENCODER_89, rmap.ENCODER_01);
+//		intakeSystem = new IntakeSystem(rmap.TALON_5, rmap.TALON_0);
+//		climbSystem = new ClimbSystem(rmap.TALON_2, rmap.TALON_3, rmap.TALON_4, rmap.ENCODER_34);
 		System.out.println("INIT");
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+//        Command lowerCommand = new ZeroBreach((BreachSystem)breachSystem);
+		Command driveCommand = new DriveAuto(driveTrain,4000,4000);
+//		Command secondCommand = new DropBreach((PIDBreachSystem)breachSystem);
+		Command nullCommand = new DoNothing();
+//		autonomousCommand = new AutoSequence(lowerCommand, driveCommand, nullCommand);
+//		autonomousCommand = driveCommand;
     }
-	
+
 >>>>>>> e99f0f0604b0ea4d0eef54401873fad44ce1c8d6
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
@@ -74,57 +56,27 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.start();
 	}
 
-	/**
-	 * This function is called periodically during autonomous
-	 */
-	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
-	}
+    /**
+     * This function is called periodically during autonomous
+     */
+    public void autonomousPeriodic() {
+    	Scheduler.getInstance().run();
+    }
 
 	public void teleopInit() {
 		// This makes sure that the autonomous stops running when
-<<<<<<< HEAD
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
-		Scheduler.getInstance().add(new Intake(intakeSystem, oi.controller0.alt, oi.controller0.art, oi.controller0.bx, oi.controller0.bb));
-		Scheduler.getInstance().add(new Drive(driveTrain, oi.controller0.aly, oi.controller0.ary));
-		Scheduler.getInstance().add(new ArmCommand(armSubsystem, oi.controller0.ba, false));
-		Scheduler.getInstance().add(new ClimbingCommand(climbingSubsystem, oi.controller0.blb, oi.controller0.brb, false));
-	}
-
-	/**
-	 * This function is called when the disabled button is hit. You can use it
-	 * to reset subsystems before shutting down.
-	 */
-	public void disabledInit() {
-
-	}
-
-	/**
-	 * This function is called periodically during operator control
-	 */
-	public void teleopPeriodic() {
-
-		Scheduler.getInstance().run();
-	}
-
-	/**
-	 * This function is called periodically during test mode
-	 */
-	public void testPeriodic() {
-		LiveWindow.run();
-	}
-=======
-        // teleop starts running. If you want the autonomous to 
+        // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out
     	System.out.println("Teleop");
         if (autonomousCommand != null) autonomousCommand.cancel();
-        Scheduler.getInstance().add(new Intake(intakeSystem, oi.controller0.ba, oi.controller0.bx));
-        Scheduler.getInstance().add(new Drive(driveTrain, oi.controller0.aly, oi.controller0.alt, oi.controller0.art, oi.controller0.bback));
+//        Scheduler.getInstance().add(new Perceive(cameraSystem, oi.controller0.brb));
+
+        Scheduler.getInstance().add(new Drive(driveTrain, oi.controller0.alx, oi.controller0.alt, oi.controller0.art, oi.controller0.bstart, oi.controller0.bback));
+//        Scheduler.getInstance().add(new Intake(intakeSystem, oi.controller1.alt, oi.controller1.art, oi.controller1.ba, oi.controller1.bx));
+//        Scheduler.getInstance().add(new Breach(breachSystem, oi.controller1.aly, oi.controller1.bback,
+//        		oi.controller1.blb, oi.controller1.bls, oi.controller1.brb, oi.controller1.bstart));
+//        Scheduler.getInstance().add(new Climb(climbSystem, oi.controller1.ary, oi.controller1.arx));
 //        System.out.println("Left Y Axis " + oi.controller0.aly);
 //        System.out.println("Right Y Axis " + oi.controller0.ary);
     }
@@ -141,15 +93,13 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-
         Scheduler.getInstance().run();
     }
-    
+
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
         LiveWindow.run();
     }
->>>>>>> e99f0f0604b0ea4d0eef54401873fad44ce1c8d6
 }
