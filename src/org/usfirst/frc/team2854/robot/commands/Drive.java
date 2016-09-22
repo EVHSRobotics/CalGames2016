@@ -22,8 +22,7 @@ public class Drive extends Command {
 
 	private int direction;
 
-	public Drive(DriveTrain aDriveTrain, Axis aleft, Axis lTrig, Axis rTrig,
-			Button buttonDirection, Button pidSwitch) {
+	public Drive(DriveTrain aDriveTrain, Axis aleft, Axis lTrig, Axis rTrig, Button buttonDirection, Button pidSwitch) {
 		leftAxis = aleft;
 		leftTrigger = lTrig;
 		rightTrigger = rTrig;
@@ -67,7 +66,7 @@ public class Drive extends Command {
 		
 		double left = trigger;
 		double right = left;
-		double aku = leftAxis.deadbandGet(); //goes left and right
+		double aku = .5*leftAxis.deadbandGet(); //goes left and right
 		
 		left -= aku;
 		right += aku;
