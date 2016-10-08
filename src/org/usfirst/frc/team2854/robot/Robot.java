@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		RMap rmap = new RMap();
-//		breachSystem = new BreachSystem(rmap.TALON_5);
+		breachSystem = new BreachSystem(rmap.TALON_5);
 //		breachSystem = new BreachSystem(rmap.TALON_1, rmap.ENCODER_01, rmap.COUNTER_9);
 		
 //		cameraSystem = new CameraSystem();
@@ -88,8 +88,8 @@ public class Robot extends IterativeRobot {
 
         Scheduler.getInstance().add(new Drive(driveTrain, oi.controller0.alx, oi.controller0.alt, oi.controller0.art, oi.controller0.bstart, oi.controller0.bback));
 //        Scheduler.getInstance().add(new Intake(intakeSystem, oi.controller1.alt, oi.controller1.art, oi.controller1.ba, oi.controller1.bx));
-//        Scheduler.getInstance().add(new Breach(breachSystem, oi.controller1.aly, oi.controller1.bback,
-//        		oi.controller1.blb, oi.controller1.bls, oi.controller1.brb, oi.controller1.bstart));
+        Scheduler.getInstance().add(new Breach(breachSystem, oi.controller1.aly, oi.controller1.bback,
+        		oi.controller1.blb, oi.controller1.bls, oi.controller1.brb, oi.controller1.bstart));
 //        Scheduler.getInstance().add(new Climb(climbSystem, oi.controller1.ary, oi.controller1.arx));
 //        System.out.println("Left Y Axis " + oi.controller0.aly);
 //        System.out.println("Right Y Axis " + oi.controller0.ary);
