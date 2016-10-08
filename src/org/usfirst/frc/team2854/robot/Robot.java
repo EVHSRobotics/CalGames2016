@@ -53,12 +53,12 @@ public class Robot extends IterativeRobot {
 //		climbSystem = new ClimbSystem(rmap.TALON_2, rmap.TALON_3, rmap.TALON_4, rmap.ENCODER_34);
 		System.out.println("INIT");
         // instantiate the command used for the autonomous period
-//        Command lowerCommand = new ZeroBreach((BreachSystem)breachSystem);
+        Command lowerCommand = new ZeroBreach((BreachSystem)breachSystem);
 		Command driveCommand = new DriveAuto(driveTrain,4000,4000);
 //		Command secondCommand = new DropBreach((PIDBreachSystem)breachSystem);
 		Command nullCommand = new DoNothing();
-//		autonomousCommand = new AutoSequence(lowerCommand, driveCommand, nullCommand);
-//		autonomousCommand = driveCommand;
+		autonomousCommand = new AutoSequence(lowerCommand, driveCommand, nullCommand);
+		autonomousCommand = driveCommand;
     }
 	
 	public void disabledPeriodic() {
